@@ -1,10 +1,11 @@
 import style from './App.module.css'
+import { useState } from 'react'
 import Message_block from './components/Message_block'
 import UserImageYoshi from "./assets/Matching_Icons_1.jpg";
 import UserImageToko from "./assets/Matching_Icons_.jpg";
 
 function App() {
-  const messages = [
+  const [messages, setMessages] = useState([
     {
         id: 1,
         username: "𝒴𝘰𝘴𝘩𝘪",
@@ -12,9 +13,9 @@ function App() {
         text: "amolchito? 0_o",
         edit: true,
         userImage: UserImageYoshi,
-        source: [
-            false
-        ]
+        source: {
+          enabled: false
+        }
     },
     {
         id: 2,
@@ -23,9 +24,9 @@ function App() {
         text: "mi amol",
         edit: false,
         userImage: UserImageToko,
-        source: [
-            false
-        ]
+        source: {
+          enabled: false
+        }
     },
     {
         id: 3,
@@ -34,10 +35,10 @@ function App() {
         text: null,
         edit: false,
         userImage: UserImageToko,
-        source: [
-            true,
-            "https://media1.tenor.com/m/HY_KHdSjvcMAAAAd/seal-bounce.gif"
-        ]
+        source: {
+          enabled: true,
+          data: "https://media1.tenor.com/m/HY_KHdSjvcMAAAAd/seal-bounce.gif"
+        }
     },
     {
         id: 4,
@@ -46,9 +47,9 @@ function App() {
         text: "aamolchitoooooooo",
         edit: false,
         userImage: UserImageYoshi,
-        source: [
-            false
-        ]
+        source: {
+          enabled: false
+        }
     },
     {
       id: 5,
@@ -57,23 +58,23 @@ function App() {
       text: "hola amol",
       edit: false,
       userImage: UserImageToko,
-      source: [
-          false
-      ]
+      source: {
+        enabled: false
+      }
     }
-  ];  
+  ]);
+
+  const toggleEditMessage = (id) => {
+    setMessages((prevMessages) => prevMessages.map((m) => m.id === id ? { ...m, edit: !m.edit } : m));
+  }
+
   return (
     <div className={style.message_block_container}>
       {messages.map((message) => (
         <Message_block 
-          key={message.id}
-          id={message.id}
-          username={message.username}
-          time={message.time}
-          text={message.text}
-          edit={message.edit}
-          userImage={message.userImage}
-          source={message.source}
+        key={message.id}
+        {...message}
+        onToggleEdit={toggleEditMessage}
         />
       ))}
     </div>

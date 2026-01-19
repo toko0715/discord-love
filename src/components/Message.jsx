@@ -1,27 +1,21 @@
-import { useState } from "react";
 import style from "./Message.module.css";
 import Message_gif from "./Message_gif";
 
-function Message({ text, edit=false, source=false, source_data=null}) {
-    const [isEditing, setIsEditing] = useState(edit);
-    console.log("state-isEditing:", isEditing);
-    if (source) {
-        return <Message_gif gif={source_data} />
+function Message({ text, edit=false, source, onToggleEdit}) {
+    if (source.enabled) {
+        return <Message_gif gif={source.data} />;
     }
 
-    const textEdit = isEditing ? "desmarcar" : "editar (marcar)";
-    const buttonClassName = isEditing ? style.edit_button_active : style.edit_button;
-    const displayEdit = isEditing && <span className={style.editado}>(editado)</span>;
-    
-    const handleEditClick = () => {
-        setIsEditing(!isEditing);
-    };
+    const textEdit = edit ? "desmarcar" : "editar (marcar)";
+    const buttonClassName = edit ? style.edit_button_active : style.edit_button;
 
     return (
         <p className={style.message}>
         {text}
-        {displayEdit}
-        <button onClick={handleEditClick} className={buttonClassName}>{textEdit}</button>
+        {edit && <span className={style.editing_text}>(editado)</span>}
+        <button onClick={onToggleEdit} className={buttonClassName}>
+            {textEdit}
+        </button>
         </p>
     );
 }

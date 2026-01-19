@@ -1,0 +1,20 @@
+.user_image {
+    width: 50px;
+    max-width: 50px;
+    max-height: 50px;
+    border-radius: 100%;
+}
+
+.message_block {
+    display: flex;
+    flex-direction: row;
+    padding: 6px;
+    gap: 13px;
+}
+
+.message_content {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
